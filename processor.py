@@ -58,7 +58,7 @@ def detect_motion_and_update(frame, prev_frame, backSub, min_area,
     result = {}
     frame_out = frame.copy()
 
-    # MOG/KNN mask
+    # MOG/KNN mask (MOG funciona mejor para entornos dinámicos que KNN)
     mask = backSub.apply(frame)
     mask[mask == 127] = 0
     kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5,5))
