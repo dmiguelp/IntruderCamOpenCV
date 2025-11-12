@@ -60,10 +60,10 @@ def detect_motion_and_update(frame, prev_frame, backSub, min_area,
 
     # MOG/KNN mask (MOG funciona mejor para entornos dinámicos que KNN)
     mask = backSub.apply(frame)
-    mask[mask == 127] = 0
-    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5,5))
-    mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
-    mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
+    mask[mask == 127] = 0 # Eliminar sombras
+    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5,5)) # suavizado
+    mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel) # Apertura morfológica Dilate -> Erode para limpiar ruido
+    mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel) # Cierre morfológico Erode -> Dilate para cerrar huecos
     cnts, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
     movimiento_mog = False
@@ -86,11 +86,11 @@ def detect_motion_and_update(frame, prev_frame, backSub, min_area,
     # difference motion
     motion_diff = False
     if prev_frame is not None:
-        diff = cv2.absdiff(prev_frame, frame)
-        gray_diff = cv2.cvtColor(diff, cv2.COLOR_BGR2GRAY)
-        _, diff_bin = cv2.threshold(gray_diff, 25, 255, cv2.THRESH_BINARY)
-        diff_bin = cv2.morphologyEx(diff_bin, cv2.MORPH_OPEN, kernel)
-        diff_bin = cv2.morphologyEx(diff_bin, cv2.MORPH_CLOSE, kernel)
+        diff = cv2.absdiff(prev_frame, frame) # Diferencia absoluta para mantener color
+        gray_diff = cv2.cvtColor(diff, cv2.COLOR_BGR2GRAY) # Escala grises
+        _, diff_bin = cv2.threshold(gray_diff, 25, 255, cv2.THRESH_BINARY) # Umbral para binarizar
+        diff_bin = cv2.morphologyEx(diff_bin, cv2.MORPH_OPEN, kernel) # Apertura morfológica Dilate -> Erode para limpiar ruido
+        diff_bin = cv2.morphologyEx(diff_bin, cv2.MORPH_CLOSE, kernel) # Cierre morfológico Erode -> Dilate para cerrar huecos
         cnts_diff, _ = cv2.findContours(diff_bin, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         for c in cnts_diff:
             if cv2.contourArea(c) >= min_area:

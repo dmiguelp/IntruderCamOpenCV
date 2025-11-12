@@ -53,11 +53,11 @@ class DetectorGUI:
         video_frame.grid(row=0, column=0, padx=5, pady=5)
         controls_frame.grid(row=0, column=1, padx=5, pady=5, sticky="n")
 
-        # video label
+        # etiquetas de video
         self.label_video = ttk.Label(video_frame); self.label_video.pack()
         self.label_tray = ttk.Label(video_frame); self.label_tray.pack(pady=6)
 
-        # sliders
+        # scrollbars
         ttk.Label(controls_frame, text="Hue shift (-90..90)").pack(anchor="w")
         self.hue_scale = ttk.Scale(controls_frame, from_=-90, to=90, orient="horizontal"); self.hue_scale.set(0); self.hue_scale.pack(fill="x")
         ttk.Label(controls_frame, text="Sat shift (-100..100)").pack(anchor="w")
@@ -65,19 +65,19 @@ class DetectorGUI:
         ttk.Label(controls_frame, text="Val shift (-100..100)").pack(anchor="w")
         self.val_scale = ttk.Scale(controls_frame, from_=-100, to=100, orient="horizontal"); self.val_scale.set(0); self.val_scale.pack(fill="x")
 
-        # buttons
+        # botones principales
         self.btn_night = ttk.Button(controls_frame, text="Toggle Nocturna (N)", command=self.toggle_night); self.btn_night.pack(fill="x", pady=4)
         self.btn_thermal = ttk.Button(controls_frame, text="Toggle Termica (T)", command=self.toggle_thermal); self.btn_thermal.pack(fill="x", pady=4)
         self.btn_record = ttk.Button(controls_frame, text="Iniciar Grabación Manual", command=self.manual_toggle); self.btn_record.pack(fill="x", pady=4)
         self.btn_clear = ttk.Button(controls_frame, text="Limpiar Trayectoria", command=self.clear_tray); self.btn_clear.pack(fill="x", pady=4)
         self.btn_toggle_alarm = ttk.Button(controls_frame, text="Toggle Alarma (S)", command=self.toggle_alarm); self.btn_toggle_alarm.pack(fill="x", pady=4)
 
-        # listbox
+        # lista
         ttk.Label(controls_frame, text="Evidencias:").pack(anchor="w", pady=(8,0))
         self.listbox = tk.Listbox(controls_frame, height=10, width=40); self.listbox.pack(side="left", fill="both")
         self.scroll = ttk.Scrollbar(controls_frame, orient="vertical", command=self.listbox.yview); self.scroll.pack(side="right", fill="y")
         self.listbox.config(yscrollcommand=self.scroll.set)
-        # play buttons
+        # botones reproductor
         self.btn_play = ttk.Button(controls_frame, text="Abrir", command=self.play_selected); self.btn_play.pack(fill="x", pady=2)
         self.btn_refresh = ttk.Button(controls_frame, text="Refresh", command=self.refresh_list); self.btn_refresh.pack(fill="x", pady=2)
         self.btn_delete = ttk.Button(controls_frame, text="Borrar", command=self.delete_selected); self.btn_delete.pack(fill="x", pady=2)
@@ -85,7 +85,7 @@ class DetectorGUI:
         self.btn_delete_all.pack(fill="x", pady=2)
 
 
-        # status
+        # estados
         self.status_motion = ttk.Label(controls_frame, text="Movimiento: NO"); self.status_motion.pack(pady=(8,2))
         self.status_record = ttk.Label(controls_frame, text="Grabando: NO"); self.status_record.pack(pady=2)
         self.status_modes = ttk.Label(controls_frame, text="Nocturna: OFF  Termica: OFF"); self.status_modes.pack(pady=2)
@@ -93,10 +93,10 @@ class DetectorGUI:
         # key bindings
         self.root.bind_all("<Key>", self._on_key)
 
-        # initial list
+        # listar evidencias al inicio
         self.refresh_list()
 
-    # --- control callbacks ---
+    # --- control botones ---
     def toggle_night(self):
         self.night_mode = not self.night_mode
         if self.night_mode and self.thermal_mode:
@@ -143,7 +143,7 @@ class DetectorGUI:
             self.shutdown()
 
 
-    # --- evid list ---
+    # --- lista evidencias ---
     def refresh_list(self):
         self.listbox.delete(0, tk.END)
         files = list_evid_files(self.cfg.EVID_DIR)
@@ -198,7 +198,7 @@ class DetectorGUI:
         ret, frame = self.cap.read()
         if not ret:
             return None
-        # HSV sliders
+        # HSV scrollbars
         self.hue_shift = int(self.hue_scale.get())
         self.sat_shift = int(self.sat_scale.get())
         self.val_shift = int(self.val_scale.get())
@@ -207,23 +207,23 @@ class DetectorGUI:
         # buffer
         self.frame_buffer.append(frame.copy())
 
-        # process motion and trajectory
+        # procesar movimiento y trayectoria
         info = detect_motion_and_update(frame, self.prev_frame, self.backSub, self.cfg.MIN_AREA,
                                         trayectoria_img=self.trayectoria_img, puntos=self.puntos,
                                         tray_w=self.tray_w, tray_h=self.tray_h)
         vis_frame = info['frame_out']
         mov = info['mov']
 
-        # faces
+        # caras
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         caras = self.face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30,30))
         for (fx,fy,fw,fh) in caras:
             cv2.rectangle(vis_frame, (fx,fy), (fx+fw, fy+fh), (255,0,0), 2)
-            # save face
+            # guardar recorte de cara
             ts = timestamp()
             cv2.imwrite(os.path.join(self.cfg.EVID_DIR, f"cara_{ts}.jpg"), frame[fy:fy+fh, fx:fx+fw])
 
-        # confirmed motion -> save and record
+        # movimiento confirmado -> guardar y grabar
         if mov:
             nowt = time.time()
             if nowt - self.last_saved_time >= self.cfg.TIMELAPSE:
@@ -234,7 +234,7 @@ class DetectorGUI:
             if self.auto_record_enabled and not self.recorder.is_recording():
                 self.recorder.start_auto_recording_with_buffer(duration=self.cfg.VIDEO_DURATION)
 
-        # apply night/thermal modes (priority thermal)
+        # aplicar modos noche/térmico 
         lum = calcular_luminosidad(frame)
         if self.thermal_mode:
             vis = aplicar_vision_termica(vis_frame)
@@ -243,17 +243,17 @@ class DetectorGUI:
         else:
             vis = vis_frame
 
-        # add to record queue if recording
+        # añadir a la cola de grabación si está grabando
         if self.recorder.is_recording():
             if len(self.record_queue) < 500:
                 self.record_queue.append(vis.copy())
 
-        # update displays
+        # actualizar displays
         self.status_motion.config(text=f"Movimiento: {'SI' if mov else 'NO'}")
         self.status_record.config(text=f"Grabando: {'SI' if self.recorder.is_recording() else 'NO'}")
         self._update_status_modes()
 
-        # prepare image for Tkinter
+        # preparar imagen para Tkinter
         vis_rgb = cv2.cvtColor(vis, cv2.COLOR_BGR2RGB)
         imgtk = ImageTk.PhotoImage(Image.fromarray(vis_rgb))
         self.label_video.imgtk = imgtk
@@ -266,7 +266,7 @@ class DetectorGUI:
         self.label_tray.imgtk = traytk
         self.label_tray.config(image=traytk)
 
-        # update prev
+        # actualizar prev
         self.prev_frame = frame.copy()
 
     def shutdown(self):

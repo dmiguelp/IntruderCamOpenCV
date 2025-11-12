@@ -1,5 +1,5 @@
 # utils.py
-# Funciones utilitarias (sonido, timestamp, listado de evidencias)
+# Funciones utilitarias (sonido, timestamp, listado de evidencias) no bloqueantes
 import time
 import threading
 import pygame

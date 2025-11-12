@@ -63,7 +63,7 @@ class RecorderManager:
                 try:
                     frame_to_write = self.record_queue.popleft()
                 except IndexError:
-                    # sin frames, esperar pequeñamente y volver a intentar
+                    # sin frames, esperar un poco y volver a intentar
                     time.sleep(0.01)
                     continue
                 if frame_to_write is not None:

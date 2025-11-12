@@ -1,4 +1,5 @@
 # player.py
+# Reproductor de imágenes y videos independiente (usando Tkinter y PIL)
 import os
 import time
 import threading
@@ -24,7 +25,7 @@ class MediaPlayer:
         self.top.title(f"Reproductor - {self._filename}")
         self.top.protocol("WM_DELETE_WINDOW", self.on_close)
 
-        # UI: image label + controls
+        # UI: etiqueta de imagen + controles
         self.lbl = ttk.Label(self.top)
         self.lbl.pack()
 
@@ -40,18 +41,18 @@ class MediaPlayer:
         self.btn_close = ttk.Button(ctrl, text="Cerrar", command=self.on_close)
         self.btn_close.pack(side="right", padx=2)
 
-        # progress scale
+        # barra de progreso
         self.scale = ttk.Scale(self.top, from_=0, to=1, orient="horizontal", command=self.on_scale_move)
         self.scale.pack(fill="x", padx=6, pady=6)
         self.scale_enabled = False
         self.user_seek = False
         self.playing = False
 
-        # time label
+        # etiqueta de tiempo
         self.time_label = ttk.Label(self.top, text="")
         self.time_label.pack()
 
-        # video capture state
+        # estado de captura de video
         self.cap = None
         self.total_frames = 0
         self.cur_frame = 0
@@ -83,7 +84,7 @@ class MediaPlayer:
             img = cv2.imread(path)
             if img is None:
                 raise RuntimeError("No se pudo leer la imagen")
-            img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+            img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) # convertir a RGB para Pillow
             h, w = img_rgb.shape[:2]
             scale = min(self.max_w / w, self.max_h / h, 1.0)
             new_w, new_h = int(w*scale), int(h*scale)
