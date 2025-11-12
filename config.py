@@ -4,8 +4,8 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-EVID_DIR = os.path.join(BASE_DIR, "Evidencias")
-ALARM_DIR = os.path.join(BASE_DIR, "Alarmas")
+EVID_DIR = os.path.join(BASE_DIR, "Evidencias") # carpeta para videos e imágenes capturados que se crea automáticamente
+ALARM_DIR = os.path.join(BASE_DIR, "Alarmas") # carpeta para sonidos de alarma
 os.makedirs(EVID_DIR, exist_ok=True)
 os.makedirs(ALARM_DIR, exist_ok=True)
 
