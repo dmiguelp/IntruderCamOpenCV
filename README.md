@@ -4,7 +4,7 @@ Este proyecto detecta **movimiento, intrusos y rostros** en tiempo real usando *
 
 ---
 
-## 📸 Características principales
+## Características principales
 
 -  **Detección de movimiento** usando diferencia de imagenes y el algoritmo MOG2.
 -  **Detección de rostros** con clasificadores Haar.
