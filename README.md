@@ -1,4 +1,4 @@
-# 🧠 Proyecto de Detección de Intrusos con OpenCV
+# Proyecto de Detección de Intrusos con OpenCV
 
 Este proyecto detecta **movimiento, intrusos y rostros** en tiempo real usando **OpenCV**, con soporte para **visión nocturna**, **visión térmica**, **grabación automática y manual**, y una **interfaz gráfica** en Tkinter para visualizar, gestionar y reproducir las evidencias.
 
@@ -6,45 +6,21 @@ Este proyecto detecta **movimiento, intrusos y rostros** en tiempo real usando *
 
 ## 📸 Características principales
 
-- 🔍 **Detección de movimiento** usando diferencia de imagenes y el algoritmo MOG2.
-- 😎 **Detección de rostros** con clasificadores Haar.
-- 🌙 **Modo visión nocturna** automático o manual.
-- 🔥 **Modo visión térmica** (colormap HSV).
-- 🎥 **Grabación automática** al detectar movimiento.
-- 🧭 **Grabación manual** (toggle desde botón GUI).
-- 📂 **Lista de evidencias** (vídeos e imágenes) con botones para ver, eliminar o limpiar.
-- 🧮 **Trackbars HSV** para ajustar color, saturación y brillo.
-- 🖥️ **Interfaz gráfica (GUI)** basada en Tkinter.
-- 🎚️ **Reproductor multimedia con barra de progreso**.
+-  **Detección de movimiento** usando diferencia de imagenes y el algoritmo MOG2.
+-  **Detección de rostros** con clasificadores Haar.
+-  **Modo visión nocturna** automático o manual.
+-  **Modo visión térmica** (colormap HSV).
+-  **Grabación automática** al detectar movimiento.
+-  **Grabación manual** (toggle desde botón GUI).
+-  **Lista de evidencias** (vídeos e imágenes) con botones para ver, eliminar o limpiar.
+-  **Trackbars HSV** para ajustar color, saturación y brillo.
+-  **Interfaz gráfica (GUI)** basada en Tkinter.
+-  **Reproductor multimedia con barra de progreso**.
 
 ---
 
-## 🧰 Estructura del proyecto
-
-```
-
-ProyectoVision/
-│
-├── gui.py                  # Interfaz principal (Tkinter + OpenCV)
-├── processor.py            # Procesamiento de frames y detección de movimiento
-├── recorder.py             # Grabación automática y manual
-├── player.py               # Reproductor multimedia con barra de progreso
-├── utils.py                # Utilidades generales
-├── config.py               # Parámetros de configuración global
-│
-├── Evidencias/             # Carpeta donde se guardan imágenes y vídeos
-├── Alarmas/                # Carpeta con sonidos .wav
-│
-├── requirements.txt        # Dependencias necesarias
-└── README.md               # Este archivo
-
-````
-
----
-
-## ⚙️ Requisitos
-
-Asegúrate de tener **Python 3.10+** instalado.  
+##  Requisitos
+ **Python 3.10+**  
 Instala las dependencias con:
 
 ```bash
@@ -62,7 +38,7 @@ pygame
 
 ---
 
-## ▶️ Ejecución
+##  Ejecución
 
 Para iniciar el programa principal:
 
@@ -83,7 +59,7 @@ La interfaz también tiene **botones equivalentes** y una lista de evidencias.
 
 
 
-## 📹 Ejemplo de funcionamiento
+## Ejemplo de funcionamiento
 
 1. El sistema detecta movimiento en cámara.
 2. Se guarda automáticamente un archivo `intruso_DDMMYYYY_HHMMSS.jpg`.
@@ -93,15 +69,15 @@ La interfaz también tiene **botones equivalentes** y una lista de evidencias.
 
 ---
 
-## 🎯 Futuras mejoras
+## Futuras mejoras
 
-* 🚀 Detección de intrusos con redes neuronales (YOLOv8 / MobileNet SSD).
-* ☁️ Envío de alertas por red o correo.
-* 🧩 Integración con una base de datos de registros.
+* Detección de intrusos con redes neuronales (YOLOv8 / MobileNet SSD).
+* Envío de alertas por red o correo.
+* Integración con una base de datos de registros.
 
 ---
 
-## 👨‍💻 Autor
+## Autor
 
 **David de Miguel Palomino**
 Universidad de Extremadura
