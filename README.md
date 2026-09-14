@@ -2,7 +2,7 @@
 
 Este proyecto detecta **movimiento, intrusos y rostros** en tiempo real usando **OpenCV**, con soporte para **visión nocturna**, **visión térmica**, **grabación automática y manual**, y una **interfaz gráfica** en Tkinter para visualizar, gestionar y reproducir las evidencias.
 
----
+
 
 ## Características principales
 
@@ -17,34 +17,34 @@ Este proyecto detecta **movimiento, intrusos y rostros** en tiempo real usando *
 -  **Interfaz gráfica (GUI)** basada en Tkinter.
 -  **Reproductor multimedia con barra de progreso**.
 
----
+
 
 ##  Requisitos
  **Python 3.10+**  
 Instala las dependencias con:
 
-```bash
+
 pip install -r requirements.txt
-````
+
 
 **requirements.txt** incluye:
 
-```
+
 opencv-python
 numpy
 Pillow
 pygame
-```
 
----
+
+
 
 ##  Ejecución
 
 Para iniciar el programa principal:
 
-```bash
+
 python main.py
-```
+
 
 Luego:
 
@@ -55,7 +55,7 @@ Luego:
 
 La interfaz también tiene **botones equivalentes** y una lista de evidencias.
 
----
+
 
 
 
@@ -67,7 +67,7 @@ La interfaz también tiene **botones equivalentes** y una lista de evidencias.
 4. La interfaz muestra la trayectoria, el frame procesado y los clips guardados.
 5. Puedes abrir o eliminar archivos desde la lista de evidencias.
 
----
+
 
 ## Futuras mejoras
 
@@ -75,7 +75,7 @@ La interfaz también tiene **botones equivalentes** y una lista de evidencias.
 * Envío de alertas por red o correo.
 * Integración con una base de datos de registros.
 
----
+
 
 ## Autor
 
@@ -84,5 +84,5 @@ Universidad de Extremadura
 Asignatura: *Imagen Digital / Proyecto de OpenCV*
 Año: 2025
 
----
+
 
